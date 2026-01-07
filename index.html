@@ -1736,45 +1736,43 @@
       }
 
       // Save order data and redirect to payment page
-      function saveOrderAndRedirect() {
-        if (cart.length === 0) {
-          Swal.fire({
-            icon: "warning",
-            title: "Empty Cart",
-            text: "Your cart is empty. Add some products first!",
-          });
-          return;
-        }
+function saveOrderAndRedirect() {
+  if (cart.length === 0) {
+    Swal.fire({
+      icon: "warning",
+      title: "Empty Cart",
+      text: "Your cart is empty. Add products first.",
+      confirmButtonColor: "#c9a24d",
+    });
+    return;
+  }
 
-        // Check if all items have size and color selected
-        const incompleteItems = cart.filter(
-          (item) => !item.size || !item.color
-        );
-        if (incompleteItems.length > 0) {
-          Swal.fire({
-            icon: "warning",
-            title: "Incomplete Items",
-            text: "Please select size and color for all items in your cart.",
-          });
-          return;
-        }
+  // Check size & color
+  const incompleteItems = cart.filter(item => !item.size || !item.color);
+  if (incompleteItems.length > 0) {
+    Swal.fire({
+      icon: "warning",
+      title: "Incomplete Items",
+      text: "Please select size and color for all items.",
+      confirmButtonColor: "#c9a24d",
+    });
+    return;
+  }
 
-        // Save order data to localStorage
-        const orderData = {
-          cart: cart,
-          total: cart.reduce(
-            (sum, item) => sum + item.price * item.quantity,
-            0
-          ),
-          orderDate: new Date().toISOString(),
-          orderId: "ORD-" + Date.now() + "-" + Math.floor(Math.random() * 1000),
-        };
+  // Save order
+  const orderData = {
+    cart: cart,
+    total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    orderDate: new Date().toISOString(),
+    orderId: "ORD-" + Date.now(),
+  };
 
-        localStorage.setItem("jellabty_order", JSON.stringify(orderData));
+  localStorage.setItem("jellabty_order", JSON.stringify(orderData));
 
-        // Redirect to payment page
-        window.location.href = "payment.html";
-      }
+  // ✅ REDIRECT TO PAYMENT
+  window.location.href = "https://jellabty-by-marwa.github.io/payment/";
+}
+
 
       // Initialize
       document.addEventListener("DOMContentLoaded", function () {
