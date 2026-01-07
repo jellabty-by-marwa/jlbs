@@ -1737,11 +1737,12 @@
 
       // Save order data and redirect to payment page
 function saveOrderAndRedirect() {
+  // Empty cart check
   if (cart.length === 0) {
     Swal.fire({
       icon: "warning",
       title: "Empty Cart",
-      text: "Your cart is empty. Add products first.",
+      text: "Please add products first",
       confirmButtonColor: "#c9a24d",
     });
     return;
@@ -1759,7 +1760,7 @@ function saveOrderAndRedirect() {
     return;
   }
 
-  // Save order
+  // Save order data
   const orderData = {
     cart: cart,
     total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
@@ -1769,9 +1770,10 @@ function saveOrderAndRedirect() {
 
   localStorage.setItem("jellabty_order", JSON.stringify(orderData));
 
-  // ✅ REDIRECT TO PAYMENT
-  window.location.href = "https://jellabty-by-marwa.github.io/payment/";
+  // Redirect to payment page (SAME DOMAIN)
+  window.location.href = "payment.html";
 }
+
 
 
       // Initialize
